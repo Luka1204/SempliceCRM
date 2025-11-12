@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreContactRequest;
-use App\Http\Requests\UpdateContactRequest;
+use App\Http\Requests\Contact\StoreContactRequest;
+use App\Http\Requests\Contact\UpdateContactRequest;
 use App\Models\Company;
 use App\Models\Contact;
 use App\Services\ContactService;
