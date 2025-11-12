@@ -7,6 +7,7 @@ use App\Repositories\ContactRepository;
 
 use App\Services\CompanyService;
 use App\Services\ContactService;
+use App\Services\DashboardService;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -35,7 +36,10 @@ class AppServiceProvider extends ServiceProvider
             $app->make(ContactRepository::class)
         );
     });
-}
+        $this->app->bind(DashboardService::class, function ($app) {
+            return new DashboardService();
+        });
+    }
 
     public function boot(): void
     {

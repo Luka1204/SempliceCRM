@@ -24,9 +24,13 @@ Route::middleware('auth')->group(function () {
 });
 
 
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
 Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    return redirect('/dashboard');
+});
 
 Route::resource('companies', CompanyController::class)->middleware(['auth']);
 Route::resource('contacts', ContactController::class)->middleware(['auth']);
