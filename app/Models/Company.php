@@ -62,4 +62,9 @@ class Company extends Model
     {
         return $this->hasMany(Deal::class);
     }
+
+    public function openDeals(): HasMany
+    {
+        return $this->hasMany(Deal::class)->open();
+    }
 }

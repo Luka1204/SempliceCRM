@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DealController;
+use App\Http\Controllers\ActivityController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -39,5 +41,15 @@ Route::resource('contacts', ContactController::class)->middleware(['auth']);
 Route::get('companies/search', [CompanyController::class, 'search'])->name('companies.search')->middleware('auth');
 Route::get('contacts/search', [ContactController::class, 'search'])->name('contacts.search')->middleware('auth');
 Route::get('companies/{company}/contacts', [ContactController::class, 'byCompany'])->name('contacts.by-company')->middleware('auth');
+
+Route::resource('deals', DealController::class)->middleware(['auth']);
+Route::get('deals/pipeline', [DealController::class, 'pipeline'])->name('deals.pipeline')->middleware('auth');
+Route::post('deals/{deal}/mark-won', [DealController::class, 'markAsWon'])->name('deals.mark-won')->middleware('auth');
+Route::post('deals/{deal}/mark-lost', [DealController::class, 'markAsLost'])->name('deals.mark-lost')->middleware('auth');
+
+
+Route::resource('activities', ActivityController::class)->middleware(['auth']);
+Route::post('activities/{activity}/complete', [ActivityController::class, 'complete'])->name('activities.complete')->middleware('auth');
+Route::get('activities/search', [ActivityController::class, 'search'])->name('activities.search')->middleware('auth');
 
 require __DIR__.'/auth.php';

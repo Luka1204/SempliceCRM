@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Policies;
+
+use App\Models\Deal;
+use App\Models\User;
+
+class DealPolicy
+{
+    public function viewAny(User $user): bool
+    {
+        return true;
+    }
+
+    public function view(User $user, Deal $deal): bool
+    {
+        return $deal->user_id === $user->id;
+    }
+
+    public function create(User $user): bool
+    {
+        return true;
+    }
+
+    public function update(User $user, Deal $deal): bool
+    {
+        return $deal->user_id === $user->id;
+    }
+
+    public function delete(User $user, Deal $deal): bool
+    {
+        return $deal->user_id === $user->id;
+    }
+
+    public function restore(User $user, Deal $deal): bool
+    {
+        return $deal->user_id === $user->id;
+    }
+
+    public function forceDelete(User $user, Deal $deal): bool
+    {
+        return $deal->user_id === $user->id;
+    }
+}
