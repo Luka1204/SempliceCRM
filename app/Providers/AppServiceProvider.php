@@ -42,7 +42,7 @@ class AppServiceProvider extends ServiceProvider
             );
         });
         $this->app->bind(DashboardService::class, function ($app) {
-            return new DashboardService();
+            return new DashboardService($app->make(\App\Services\ActivityService::class));
         });
         $this->app->bind(DealRepository::class, function ($app) {
             return new DealRepository();

@@ -17,10 +17,23 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
     protected $fillable = [
         'name',
-        'email',
+        'email', 
         'password',
+        'notification_preferences',
+        'email_notifications',
+        'activity_reminders',
+        'reminder_hours_before',
+    ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'notification_preferences' => 'array',
+        'email_notifications' => 'boolean',
+        'activity_reminders' => 'boolean',
     ];
 
     /**
@@ -44,5 +57,41 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+      /**
+     * Get activities that need reminders
+     */
+    public function activitiesNeedingReminder()
+    {
+        $reminderTime = now()->addHours($this->reminder_hours_before);
+        
+        return $this->activities()
+            ->where('status', 'scheduled')
+            ->where('scheduled_at', '>=', now())
+            ->where('scheduled_at', '<=', $reminderTime)
+            ->with(['company', 'contact'])
+            ->get();
+    }
+
+    /**
+     * Check if user wants activity reminders
+     */
+    public function wantsActivityReminders(): bool
+    {
+        return $this->activity_reminders && $this->email_notifications;
+    }
+
+    /**
+     * Get today's scheduled activities
+     */
+    public function todaysActivities()
+    {
+        return $this->activities()
+            ->where('status', 'scheduled')
+            ->whereDate('scheduled_at', today())
+            ->with(['company', 'contact'])
+            ->orderBy('scheduled_at')
+            ->get();
     }
 }

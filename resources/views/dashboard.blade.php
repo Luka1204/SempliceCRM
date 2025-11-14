@@ -57,7 +57,7 @@
                     </div>
                 </div>
 
-                <!-- Activity Rate -->
+                <!-- Total Deals -->
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border-l-4 border-purple-500">
                     <div class="p-6">
                         <div class="flex items-center">
@@ -67,31 +67,31 @@
                                 </svg>
                             </div>
                             <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-500">Activity Rate</p>
-                                <p class="text-2xl font-semibold text-gray-900">
-                                    {{ $stats['companies_count'] > 0 ? round(($stats['contacts_count'] / $stats['companies_count']), 1) : 0 }}
+                                <p class="text-sm font-medium text-gray-500">Total Deals</p>
+                                <p class="text-2xl font-semibold text-gray-900">{{ $stats['deals_count'] }}</p>
+                                <p class="text-xs text-green-600 mt-1">
+                                    +{{ $stats['recent_deals_count'] }} this month
                                 </p>
-                                <p class="text-xs text-gray-500 mt-1">Contacts per company</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Completion -->
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border-l-4 border-yellow-500">
+                <!-- Total Activities -->
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border-l-4 border-orange-500">
                     <div class="p-6">
                         <div class="flex items-center">
-                            <div class="flex-shrink-0 bg-yellow-100 rounded-md p-3">
-                                <svg class="h-6 w-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            <div class="flex-shrink-0 bg-orange-100 rounded-md p-3">
+                                <svg class="h-6 w-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                                 </svg>
                             </div>
                             <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-500">Profile Completion</p>
-                                <p class="text-2xl font-semibold text-gray-900">
-                                    {{ min(100, max(0, ($stats['companies_count'] + $stats['contacts_count']) * 5)) }}%
+                                <p class="text-sm font-medium text-gray-500">Total Activities</p>
+                                <p class="text-2xl font-semibold text-gray-900">{{ $stats['activities_count'] }}</p>
+                                <p class="text-xs text-gray-500 mt-1">
+                                    {{ $stats['upcoming_activities_count'] }} upcoming
                                 </p>
-                                <p class="text-xs text-gray-500 mt-1">Keep adding data!</p>
                             </div>
                         </div>
                     </div>
@@ -130,170 +130,322 @@
                                 </div>
                             </a>
 
-                            <a href="{{ route('companies.index') }}" 
-                               class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 hover:border-gray-300 transition duration-150">
-                                <div class="flex-shrink-0 bg-gray-100 rounded-lg p-2">
-                                    <svg class="h-6 w-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                            <a href="{{ route('deals.create') }}" 
+                               class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-purple-50 hover:border-purple-300 transition duration-150">
+                                <div class="flex-shrink-0 bg-purple-100 rounded-lg p-2">
+                                    <svg class="h-6 w-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                     </svg>
                                 </div>
                                 <div class="ml-4">
-                                    <p class="text-sm font-medium text-gray-900">View Companies</p>
-                                    <p class="text-xs text-gray-500">All businesses</p>
+                                    <p class="text-sm font-medium text-gray-900">Add Deal</p>
+                                    <p class="text-xs text-gray-500">New opportunity</p>
                                 </div>
                             </a>
 
-                            <a href="{{ route('contacts.index') }}" 
-                               class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 hover:border-gray-300 transition duration-150">
-                                <div class="flex-shrink-0 bg-gray-100 rounded-lg p-2">
-                                    <svg class="h-6 w-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <a href="{{ route('activities.create') }}" 
+                               class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-orange-50 hover:border-orange-300 transition duration-150">
+                                <div class="flex-shrink-0 bg-orange-100 rounded-lg p-2">
+                                    <svg class="h-6 w-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                    </svg>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-gray-900">Log Activity</p>
+                                    <p class="text-xs text-gray-500">New interaction</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Grid -->
+            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                <!-- Left Column -->
+                <div class="space-y-6">
+                    <!-- Upcoming Activities -->
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-medium text-gray-900">Upcoming Activities</h3>
+                                <a href="{{ route('activities.index') }}" class="text-sm text-blue-600 hover:text-blue-900 font-medium">View all</a>
+                            </div>
+                            
+                            @if($upcomingActivities->count() > 0)
+                                <div class="space-y-3">
+                                    @foreach($upcomingActivities as $activity)
+                                        <div class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition duration-150 group">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="flex-shrink-0 w-8 h-8 rounded-full 
+                                                    {{ $activity->type === 'call' ? 'bg-blue-100' : '' }}
+                                                    {{ $activity->type === 'meeting' ? 'bg-green-100' : '' }}
+                                                    {{ $activity->type === 'email' ? 'bg-purple-100' : '' }}
+                                                    {{ $activity->type === 'task' ? 'bg-yellow-100' : '' }}
+                                                    {{ $activity->type === 'note' ? 'bg-gray-100' : '' }}
+                                                    flex items-center justify-center group-hover:scale-110 transition duration-150">
+                                                    <svg class="w-4 h-4 
+                                                        {{ $activity->type === 'call' ? 'text-blue-600' : '' }}
+                                                        {{ $activity->type === 'meeting' ? 'text-green-600' : '' }}
+                                                        {{ $activity->type === 'email' ? 'text-purple-600' : '' }}
+                                                        {{ $activity->type === 'task' ? 'text-yellow-600' : '' }}
+                                                        {{ $activity->type === 'note' ? 'text-gray-600' : '' }}" 
+                                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        @if($activity->type === 'call')
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                                        @elseif($activity->type === 'meeting')
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                                        @elseif($activity->type === 'email')
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                                        @elseif($activity->type === 'task')
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                                        @else
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                                        @endif
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm font-medium text-gray-900">{{ $activity->title }}</p>
+                                                    <div class="flex items-center space-x-2 text-xs text-gray-500">
+                                                        <span>{{ $activity->company->name }}</span>
+                                                        @if($activity->contact)
+                                                        <span>•</span>
+                                                        <span>{{ $activity->contact->full_name }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-right">
+                                                <p class="text-sm font-medium text-gray-900">{{ $activity->scheduled_at->format('M j, g:i A') }}</p>
+                                                @if($activity->is_overdue)
+                                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
+                                                    Overdue
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @else
+                                <div class="text-center py-8">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <p class="mt-2 text-sm text-gray-500">No upcoming activities.</p>
+                                    <a href="{{ route('activities.create') }}" class="mt-3 inline-flex items-center text-sm text-blue-600 hover:text-blue-900 font-medium">
+                                        Schedule your first activity
+                                        <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <!-- Recent Companies -->
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-medium text-gray-900">Recent Companies</h3>
+                                <a href="{{ route('companies.index') }}" class="text-sm text-blue-600 hover:text-blue-900 font-medium">View all</a>
+                            </div>
+                            
+                            @if($recentCompanies->count() > 0)
+                                <div class="space-y-3">
+                                    @foreach($recentCompanies as $company)
+                                        <div class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition duration-150 group">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="flex-shrink-0 h-10 w-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition duration-150">
+                                                    <span class="text-blue-600 font-semibold text-sm">
+                                                        {{ strtoupper(substr($company->name, 0, 2)) }}
+                                                    </span>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm font-medium text-gray-900">{{ $company->name }}</p>
+                                                    <div class="flex items-center space-x-2 text-xs text-gray-500">
+                                                        <span>{{ $company->email ?? 'No email' }}</span>
+                                                        <span>•</span>
+                                                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                                            {{ $company->contacts_count }} contacts
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-xs text-gray-500 whitespace-nowrap">
+                                                {{ $company->created_at->diffForHumans() }}
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @else
+                                <div class="text-center py-8">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                    </svg>
+                                    <p class="mt-2 text-sm text-gray-500">No companies yet.</p>
+                                    <a href="{{ route('companies.create') }}" class="mt-3 inline-flex items-center text-sm text-blue-600 hover:text-blue-900 font-medium">
+                                        Add your first company
+                                        <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="space-y-6">
+                    <!-- Recent Activities -->
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-medium text-gray-900">Recent Activities</h3>
+                                <a href="{{ route('activities.index') }}" class="text-sm text-blue-600 hover:text-blue-900 font-medium">View all</a>
+                            </div>
+                            
+                            @if($recentActivities->count() > 0)
+                                <div class="space-y-3">
+                                    @foreach($recentActivities as $activity)
+                                        <div class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition duration-150 group">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="flex-shrink-0 w-8 h-8 rounded-full 
+                                                    {{ $activity->type === 'call' ? 'bg-blue-100' : '' }}
+                                                    {{ $activity->type === 'meeting' ? 'bg-green-100' : '' }}
+                                                    {{ $activity->type === 'email' ? 'bg-purple-100' : '' }}
+                                                    {{ $activity->type === 'task' ? 'bg-yellow-100' : '' }}
+                                                    {{ $activity->type === 'note' ? 'bg-gray-100' : '' }}
+                                                    flex items-center justify-center">
+                                                    <svg class="w-4 h-4 
+                                                        {{ $activity->type === 'call' ? 'text-blue-600' : '' }}
+                                                        {{ $activity->type === 'meeting' ? 'text-green-600' : '' }}
+                                                        {{ $activity->type === 'email' ? 'text-purple-600' : '' }}
+                                                        {{ $activity->type === 'task' ? 'text-yellow-600' : '' }}
+                                                        {{ $activity->type === 'note' ? 'text-gray-600' : '' }}" 
+                                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <!-- Iconos igual que arriba -->
+                                                        @if($activity->type === 'call')
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                                        @elseif($activity->type === 'meeting')
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                                        @elseif($activity->type === 'email')
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                                        @elseif($activity->type === 'task')
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                                        @else
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                                        @endif
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm font-medium text-gray-900">{{ $activity->title }}</p>
+                                                    <div class="flex items-center space-x-2 text-xs text-gray-500">
+                                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium 
+                                                            {{ $activity->status === 'completed' ? 'bg-green-100 text-green-800' : '' }}
+                                                            {{ $activity->status === 'scheduled' ? 'bg-blue-100 text-blue-800' : '' }}
+                                                            {{ $activity->status === 'cancelled' ? 'bg-red-100 text-red-800' : '' }}">
+                                                            {{ $activity->status_name }}
+                                                        </span>
+                                                        <span>•</span>
+                                                        <span>{{ $activity->company->name }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-xs text-gray-500 whitespace-nowrap">
+                                                {{ $activity->created_at->diffForHumans() }}
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @else
+                                <div class="text-center py-8">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                                    </svg>
+                                    <p class="mt-2 text-sm text-gray-500">No activities yet.</p>
+                                    <a href="{{ route('activities.create') }}" class="mt-3 inline-flex items-center text-sm text-blue-600 hover:text-blue-900 font-medium">
+                                        Log your first activity
+                                        <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <!-- Recent Contacts -->
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-medium text-gray-900">Recent Contacts</h3>
+                                <a href="{{ route('contacts.index') }}" class="text-sm text-blue-600 hover:text-blue-900 font-medium">View all</a>
+                            </div>
+                            
+                            @if($recentContacts->count() > 0)
+                                <div class="space-y-3">
+                                    @foreach($recentContacts as $contact)
+                                        <div class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition duration-150 group">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="flex-shrink-0 h-10 w-10 bg-green-100 rounded-full flex items-center justify-center group-hover:bg-green-200 transition duration-150">
+                                                    <span class="text-green-600 font-semibold text-sm">
+                                                        {{ $contact->initials }}
+                                                    </span>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm font-medium text-gray-900">{{ $contact->full_name }}</p>
+                                                    <div class="flex items-center space-x-2 text-xs text-gray-500">
+                                                        <span>{{ $contact->position ?? 'No position' }}</span>
+                                                        <span>•</span>
+                                                        <span class="text-blue-600 hover:text-blue-900">
+                                                            {{ $contact->company->name }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-xs text-gray-500 whitespace-nowrap">
+                                                {{ $contact->created_at->diffForHumans() }}
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @else
+                                <div class="text-center py-8">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                                     </svg>
+                                    <p class="mt-2 text-sm text-gray-500">No contacts yet.</p>
+                                    <a href="{{ route('contacts.create') }}" class="mt-3 inline-flex items-center text-sm text-blue-600 hover:text-blue-900 font-medium">
+                                        Add your first contact
+                                        <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </a>
                                 </div>
-                                <div class="ml-4">
-                                    <p class="text-sm font-medium text-gray-900">View Contacts</p>
-                                    <p class="text-xs text-gray-500">All people</p>
-                                </div>
-                            </a>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Recent Activity -->
-            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                <!-- Recent Companies -->
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-lg font-medium text-gray-900">Recent Companies</h3>
-                            <a href="{{ route('companies.index') }}" class="text-sm text-blue-600 hover:text-blue-900 font-medium">View all</a>
-                        </div>
-                        
-                        @if($recentCompanies->count() > 0)
-                            <div class="space-y-3">
-                                @foreach($recentCompanies as $company)
-                                    <div class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition duration-150 group">
-                                        <div class="flex items-center space-x-3">
-                                            <div class="flex-shrink-0 h-10 w-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition duration-150">
-                                                <span class="text-blue-600 font-semibold text-sm">
-                                                    {{ strtoupper(substr($company->name, 0, 2)) }}
-                                                </span>
-                                            </div>
-                                            <div>
-                                                <p class="text-sm font-medium text-gray-900">{{ $company->name }}</p>
-                                                <div class="flex items-center space-x-2 text-xs text-gray-500">
-                                                    <span>{{ $company->email ?? 'No email' }}</span>
-                                                    <span>•</span>
-                                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                                        {{ $company->contacts_count }} contacts
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="text-xs text-gray-500 whitespace-nowrap">
-                                            {{ $company->created_at->diffForHumans() }}
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @else
-                            <div class="text-center py-8">
-                                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                                </svg>
-                                <p class="mt-2 text-sm text-gray-500">No companies yet.</p>
-                                <a href="{{ route('companies.create') }}" class="mt-3 inline-flex items-center text-sm text-blue-600 hover:text-blue-900 font-medium">
-                                    Add your first company
-                                    <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-
-                <!-- Recent Contacts -->
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-lg font-medium text-gray-900">Recent Contacts</h3>
-                            <a href="{{ route('contacts.index') }}" class="text-sm text-blue-600 hover:text-blue-900 font-medium">View all</a>
-                        </div>
-                        
-                        @if($recentContacts->count() > 0)
-                            <div class="space-y-3">
-                                @foreach($recentContacts as $contact)
-                                    <div class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition duration-150 group">
-                                        <div class="flex items-center space-x-3">
-                                            <div class="flex-shrink-0 h-10 w-10 bg-green-100 rounded-full flex items-center justify-center group-hover:bg-green-200 transition duration-150">
-                                                <span class="text-green-600 font-semibold text-sm">
-                                                    {{ $contact->initials }}
-                                                </span>
-                                            </div>
-                                            <div>
-                                                <p class="text-sm font-medium text-gray-900">{{ $contact->full_name }}</p>
-                                                <div class="flex items-center space-x-2 text-xs text-gray-500">
-                                                    <span>{{ $contact->position ?? 'No position' }}</span>
-                                                    <span>•</span>
-                                                    <span class="text-blue-600 hover:text-blue-900">
-                                                        {{ $contact->company->name }}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="text-xs text-gray-500 whitespace-nowrap">
-                                            {{ $contact->created_at->diffForHumans() }}
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @else
-                            <div class="text-center py-8">
-                                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                                </svg>
-                                <p class="mt-2 text-sm text-gray-500">No contacts yet.</p>
-                                <a href="{{ route('contacts.create') }}" class="mt-3 inline-flex items-center text-sm text-blue-600 hover:text-blue-900 font-medium">
-                                    Add your first contact
-                                    <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
-            <!-- Growth Chart Section -->
+            <!-- Activity Types Distribution -->
+            @if(!empty($activityTypes))
             <div class="mt-8 bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Business Growth</h3>
-                    <div class="bg-gray-50 rounded-lg p-6">
-                        <div class="text-center">
-                            <div class="flex items-center justify-center space-x-6">
-                                <div class="text-center">
-                                    <div class="text-2xl font-bold text-blue-600">{{ $stats['companies_count'] }}</div>
-                                    <div class="text-sm text-gray-500">Total Companies</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="text-2xl font-bold text-green-600">{{ $stats['contacts_count'] }}</div>
-                                    <div class="text-sm text-gray-500">Total Contacts</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="text-2xl font-bold text-purple-600">{{ $stats['recent_companies_count'] }}</div>
-                                    <div class="text-sm text-gray-500">New This Month</div>
-                                </div>
-                            </div>
-                            <p class="mt-4 text-sm text-gray-500">
-                                Your CRM is growing! Keep adding new companies and contacts to build your network.
-                            </p>
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Activity Types Distribution</h3>
+                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+                        @foreach($activityTypes as $type => $count)
+                        <div class="text-center p-4 bg-gray-50 rounded-lg">
+                            <div class="text-2xl font-bold text-gray-900">{{ $count }}</div>
+                            <div class="text-sm text-gray-500 capitalize">{{ $type }}</div>
                         </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </x-app-layout>

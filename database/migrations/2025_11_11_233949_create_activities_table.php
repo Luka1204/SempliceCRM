@@ -22,8 +22,8 @@ return new class extends Migration
             $table->foreignId('company_id')->constrained()->onDelete('cascade');
             $table->foreignId('contact_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
 
             // Índices
             $table->index('type');

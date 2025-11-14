@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Activity extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Notifiable;
 
     protected $fillable = [
         'type',
@@ -121,5 +122,18 @@ class Activity extends Model
             'scheduled_at' => $newDate,
             'status' => 'scheduled'
         ]);
+    }
+
+     
+
+    public function routeNotificationForMail($notification): array|string
+    {
+        return $this->user->email;
+    }
+
+
+    public function preferredChannels(): array
+    {
+        return ['mail', 'database'];
     }
 }

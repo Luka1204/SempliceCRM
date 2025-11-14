@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company;
-use App\Models\Contact;
 use App\Services\DashboardService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -21,8 +19,19 @@ class DashboardController extends Controller
         $stats = $this->dashboardService->getUserStats($user);
         $recentCompanies = $this->dashboardService->getRecentCompanies($user);
         $recentContacts = $this->dashboardService->getRecentContacts($user);
-        $companiesByCreation = $this->dashboardService->getCompaniesByCreationDate($user);
+        $recentDeals = $this->dashboardService->getRecentDeals($user);
+        $upcomingActivities = $this->dashboardService->getUpcomingActivities($user);
+        $recentActivities = $this->dashboardService->getRecentActivities($user);
+        $activityTypes = $this->dashboardService->getActivityTypesDistribution($user);
 
-        return view('dashboard', compact('stats', 'recentCompanies', 'recentContacts', 'companiesByCreation'));
+        return view('dashboard', compact(
+            'stats',
+            'recentCompanies',
+            'recentContacts', 
+            'recentDeals',
+            'upcomingActivities',
+            'recentActivities',
+            'activityTypes'
+        ));
     }
 }

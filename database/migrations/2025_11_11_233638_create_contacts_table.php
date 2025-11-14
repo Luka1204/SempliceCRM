@@ -22,8 +22,8 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->foreignId('company_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
 
             // Índices para búsquedas eficientes
             $table->index(['first_name', 'last_name']);

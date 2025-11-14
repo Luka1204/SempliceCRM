@@ -52,4 +52,9 @@ Route::resource('activities', ActivityController::class)->middleware(['auth']);
 Route::post('activities/{activity}/complete', [ActivityController::class, 'complete'])->name('activities.complete')->middleware('auth');
 Route::get('activities/search', [ActivityController::class, 'search'])->name('activities.search')->middleware('auth');
 
+
+// Notification routes
+Route::get('/profile/notifications', [ProfileController::class, 'notifications'])->name('profile.notifications');
+Route::put('/profile/notifications', [ProfileController::class, 'updateNotifications'])->name('profile.notifications.update');
+Route::post('/profile/notifications/test', [ProfileController::class, 'testNotifications'])->name('profile.notifications.test');
 require __DIR__.'/auth.php';
